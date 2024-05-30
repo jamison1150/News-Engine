@@ -1,7 +1,8 @@
 from transformers import pipeline
 import json
 
-summarizer = pipeline("summarization", model="EleutherAI/gpt-neo-2.7B")
+# Use a supported model for summarization
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 def summarize_article(article):
     text = f"{article['title']} - {article['description']}"
