@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Report</title>
+</head>
+<body>
+    <h1>News Report</h1>
+    <div id="content">
+        <!-- Summaries will be inserted here -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function generatePDF() {
+            const element = document.getElementById('content');
+            html2pdf().from(element).save('news_report.pdf');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('summaries.json')
+                .then(response => response.json())
+                .then(summaries => {
+                    const content = document.getElementById('content');
+                    summaries.forEach((summary, index) => {
+                        const articleDiv = document.createElement('div');
+                        articleDiv.innerHTML = `<h2>Article ${index + 1}</h2><p>${summary}</p>`;
+                        content.appendChild(articleDiv);
+                    });
+                    generatePDF();
+                });
+        });
+    </script>
+</body>
+</html>
